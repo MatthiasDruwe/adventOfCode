@@ -3,23 +3,28 @@ class Day4 {
     fun start() {
         val data = getListOfData("Day4.txt")
         val bingoNumbers = data[0].split(",").map { it.toInt() };
-        val bingoMatrices = loadMatrix(data)
-        var bingomatrix: Array<Array<Number>>? = null
+        var bingoMatrices = loadMatrix(data)
+        var bingomatrix: Array<Array<Number>> = Array(0){ Array(0){ Number(0) } }
         var bingoindex = 0;
         var bingonumber = 0
-        while (bingomatrix == null) {
+        while (bingoMatrices.size !=0) {
             bingonumber = bingoNumbers[bingoindex];
             bingoindex++
 
+            var newBingoMatrices =  MutableList(0){Array(5){Array(5){Number(0)}}}
             for(matrix in bingoMatrices){
                 matrix.forEach { row -> row.forEach { if(it.value == bingonumber) it.checked = true } }
                 if(checkMatrixForBingo(matrix)){
                     bingomatrix = matrix
+                } else {
+                    newBingoMatrices.add(matrix)
                 }
             }
+            bingoMatrices = newBingoMatrices
         }
 
-        println(bingomatrix)
+        val sum = bingomatrix.sumOf { row -> row.sumOf { if (!it.checked)it.value else 0  } }
+        println("answer: ${sum * bingonumber}")
     }
 
     private fun checkMatrixForBingo(card: Array<Array<Number>>): Boolean {
