@@ -8,8 +8,8 @@ class Day12 {
 
     private fun convertToPath(data: List<String>): MutableList<Path> {
         val paths = mutableListOf<Path>()
-        data.forEach {
-            val items = it.split("-")
+        data.forEach { row ->
+            val items = row.split("-")
 
             val path1 = paths.find { it.from == items[0] }
             val path2 = paths.find { it.from == items[1] }
@@ -30,7 +30,7 @@ class Day12 {
     }
 
     private fun part1(data: MutableList<Path>) {
-        val routes = data.first { it.from == "start" }.calculateRoutesTo("end", mutableListOf<String>("start"), data)
+        val routes = data.first { it.from == "start" }.calculateRoutesTo("end", mutableListOf("start"), data)
         println(routes)
         println(routes.count())
     }
@@ -44,14 +44,14 @@ class Path( val from: String, val to: MutableList<String>) {
     fun calculateRoutesTo(to: String, stops: List<String>, paths: List<Path>): List<List<String>> {
 
         if(stops.isNotEmpty() && stops.last() == to) {
-            return listOf(stops);
+            return listOf(stops)
         }
 
         val routes = mutableListOf<List<String>>()
         this.to.forEach { destination ->
             if (checkDestination(destination, stops)) {
                 val nextPath = paths.first{it.from == destination}
-                var newStops = mutableListOf<String>()
+                val newStops = mutableListOf<String>()
                 newStops.addAll(stops)
                 newStops.add(destination)
                 val x = nextPath.calculateRoutesTo(to,newStops.toList(),paths )
