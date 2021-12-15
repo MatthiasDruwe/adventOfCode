@@ -1,4 +1,3 @@
-import kotlin.math.max
 
 class Day15 {
     fun start() {
@@ -10,7 +9,7 @@ class Day15 {
     private fun part1(data: List<List<Int>>) {
 
         println(data)
-        var points = createPoints(data)
+        val points = createPoints(data)
 
         val lastY = data.size - 1
         val lastX = data[lastY].size - 1
@@ -20,15 +19,14 @@ class Day15 {
     }
 
     private fun createPoints(data: List<List<Int>>): MutableMap<Pair<Int, Int>, Point> {
-        var points = mutableMapOf<Pair<Int,Int>,Point>()
+        val points = mutableMapOf<Pair<Int,Int>,Point>()
         data.forEachIndexed { i, row ->
             row.forEachIndexed { j, _ ->
                 val point = Point(Pair(i, j), mutableListOf())
                 points[point.pair] = point
             }
         }
-        val lastY = data.size - 1
-        val lastX = data[lastY].size - 1
+
         var counter = 0
         points.forEach {
             counter++
@@ -84,8 +82,8 @@ class Day15 {
         for (i in 0..4) {
             for (j in 0..4) {
                 data.forEachIndexed { newI, ints ->
-                    ints.forEachIndexed { newj, value ->
-                        newData[i * sizeY + newI][j * sizeX + newj] = (value + i + j - 1) % 9 + 1
+                    ints.forEachIndexed { newJ, value ->
+                        newData[i * sizeY + newI][j * sizeX + newJ] = (value + i + j - 1) % 9 + 1
                     }
                 }
             }
@@ -110,13 +108,14 @@ class Day15 {
         distance[Pair(0,0)] = 0
         sortingDistance[Pair(0,0)]=0
 
-        val Q = points.toMutableMap()
+        val map
+        = points.toMutableMap()
 
-        while(Q.isNotEmpty()) {
+        while(map.isNotEmpty()) {
             val pair = sortingDistance.toList().minByOrNull { it.second }!!.first
 
             sortingDistance.remove(pair)
-            val point=Q.remove(pair)
+            val point=map.remove(pair)
             if (point != null) {
                 for (connection in point.connections){
                     if((distance[connection.to.pair]?:maxValue) > (distance[point.pair]?:maxValue) + connection.value){
@@ -128,17 +127,6 @@ class Day15 {
             }
         }
         return distance
-    }
-
-    private fun findMinimal(q: MutableMap<Pair<Int, Int>, Point>, distance: MutableMap<Pair<Int,Int>, Int> ): Pair<Int,Int> {
-        var min  = q.keys.first()
-
-        for (point in q){
-            if(distance[point.key]!! < distance[min]!!){
-                min = point.key
-            }
-        }
-        return min
     }
 }
 
