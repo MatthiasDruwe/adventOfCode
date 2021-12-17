@@ -1,4 +1,4 @@
-fun main(args: Array<String>) {
+fun main() {
     println("Advent of Code")
 //    Day1().start()
 //    Day2().start()
@@ -15,5 +15,6 @@ fun main(args: Array<String>) {
 //    Day13().start()
 //    Day14().start()
 //    Day15().start()
-    Day16().start()
+//    Day16().start()
+    Day17().start()
 }
