@@ -16,5 +16,6 @@ fun main() {
 //    Day14().start()
 //    Day15().start()
 //    Day16().start()
-    Day17().start()
+//    Day17().start()
+    Day18().start()
 }
