@@ -115,6 +115,6 @@ private fun Triple<Int, Int, Int>.reverse(index: Int): Triple<Int,Int,Int>{
     }
 }
 
-private operator fun Triple<Int, Int, Int>.minus(item2: Triple<Int, Int, Int>) :Triple<Int,Int,Int> {
+operator fun Triple<Int, Int, Int>.minus(item2: Triple<Int, Int, Int>) :Triple<Int,Int,Int> {
     return Triple(this.first-item2.first, this.second - item2.second, this.third-item2.third)
 }
